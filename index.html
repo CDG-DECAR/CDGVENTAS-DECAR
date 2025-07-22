@@ -88,68 +88,20 @@
     }
 
     .content {
-      padding: 60px 20px;
+      padding: 40px 20px;
       text-align: center;
     }
 
-    .hero {
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 40px auto;
+    }
+
+    .card {
       background-color: white;
-      border-radius: 12px;
-      padding: 60px 40px;
-      margin: auto;
-      max-width: 800px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    }
-
-    .hero h1 {
-      font-size: 32px;
-      margin-bottom: 20px;
-    }
-
-    .hero p {
-      font-size: 18px;
-      color: #333;
-    }
-  </style>
-  <script>
-    const clave = prompt("Ingresa la contraseña:");
-    if (clave !== "cdgdecar") {
-      alert("Acceso denegado");
-      window.location.href = "https://www.google.com";
-    }
-  </script>
-</head>
-<body>
-  <div class="navbar">
-    <div style="display: flex; align-items: center;">
-      <img src="./assets/logo-decar.png" alt="Logo DECAR" />
-    </div>
-    <ul class="menu">
-      <li><a href="dashboard.html#dif-costos">DIF. COSTOS</a></li>
-      <li><a href="dashboard.html#estadisticas">ESTADÍSTICAS</a></li>
-      <li><a href="dashboard.html#inventario">INVENTARIO</a></li>
-      <li><a href="dashboard.html#compra">COMPRA</a></li>
-      <li><a href="dashboard.html#politica">POLÍTICA DE STOCK</a></li>
-      <li class="submenu">
-        <a href="#">LISTAS DE PRECIO ▾</a>
-        <ul>
-          <li><a href="assets/listas/SUZUKI.xlsx" target="_blank">Suzuki</a></li>
-          <li><a href="assets/listas/MAZDA.xlsx" target="_blank">Mazda</a></li>
-          <li><a href="assets/listas/GWM.xlsx" target="_blank">GWM</a></li>
-          <li><a href="assets/listas/CHANGAN.xlsx" target="_blank">Changan</a></li>
-          <li><a href="assets/listas/RENAULT.xlsx" target="_blank">Renault</a></li>
-        </ul>
-      </li>
-      <li><a href="index.html">Cerrar sesión</a></li>
-    </ul>
-  </div>
-
-  <div class="content">
-    <div class="hero">
-      <h1>CONTROL DE GESTIÓN DECAR</h1>
-      <p>Encargado: Daniel Bermedo</p>
-      <p>Accede a los reportes estratégicos, dashboards, seguimiento de inventarios y herramientas clave para la gestión eficiente de la operación comercial.</p>
-    </div>
-  </div>
-</body>
-</html>
+      border-radius: 10px;
+      padding: 30px;
+      box-sha
