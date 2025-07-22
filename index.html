@@ -1,88 +1,46 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CDG - DECAR</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Privado</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Barra de navegación -->
+  <!-- Navbar principal estilo Derco -->
   <nav class="navbar">
-    <div class="navbar-container">
-      <img src="assets/logo-decar.png" alt="Logo DECAR" class="logo-navbar">
-      <ul class="menu">
-        <li><a href="#dif-costos">DIF. COSTOS</a></li>
-        <li><a href="#estadisticas">ESTADÍSTICAS</a></li>
-        <li><a href="#inventario">INVENTARIO</a></li>
-        <li><a href="#compra">COMPRA</a></li>
-        <li><a href="#politica">POLÍTICA DE STOCK</a></li>
-        <li class="submenu">
-          <a href="#">LISTAS DE PRECIO</a>
-          <ul>
-            <li><a href="#suzuki">Suzuki</a></li>
-            <li><a href="#mazda">Mazda</a></li>
-            <li><a href="#gwm">GWM</a></li>
-            <li><a href="#changan">Changan</a></li>
-            <li><a href="#renault">Renault</a></li>
-          </ul>
-        </li>
-      </ul>
+    <div class="navbar-logos">
+      <img src="assets/logo-derco.png" alt="Logo Derco" class="logo" />
+      <img src="assets/logo-decar.png" alt="Logo Decar" class="logo" />
+    </div>
+    <ul class="navbar-menu">
+      <li><a href="#dif-costos">DIF. COSTOS</a></li>
+      <li><a href="#estadisticas">ESTADÍSTICAS</a></li>
+      <li><a href="#inventario">INVENTARIO</a></li>
+      <li><a href="#compra">COMPRA</a></li>
+      <li><a href="#politica-stock">POLÍTICA DE STOCK</a></li>
+      <li class="dropdown">
+        <a href="#listas-precio">LISTAS DE PRECIO ▾</a>
+        <ul class="dropdown-menu">
+          <li><a href="listas/suzuki.html">Suzuki</a></li>
+          <li><a href="listas/mazda.html">Mazda</a></li>
+          <li><a href="listas/gwm.html">GWM</a></li>
+          <li><a href="listas/changan.html">Changan</a></li>
+          <li><a href="listas/renault.html">Renault</a></li>
+        </ul>
+      </li>
+    </ul>
+    <div class="logout">
+      <a href="#cerrar">Cerrar sesión</a>
     </div>
   </nav>
 
   <!-- Contenido principal -->
-  <main>
-    <section id="dif-costos">
-      <h1>Diferencia de Costos</h1>
-      <iframe title="Diferencia de costos" width="100%" height="450" src="https://app.powerbi.com/view?r=eyJrIjoiNzk0MzE0ZjEtNjc3MS00NDI2LWI4NDktNWQyZWZhZjQwMWRlIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9" frameborder="0" allowfullscreen="true"></iframe>
-    </section>
-
-    <section id="estadisticas">
-      <h1>Estadísticas</h1>
-      <p>Contenido próximamente...</p>
-    </section>
-
-    <section id="inventario">
-      <h1>Inventario</h1>
-      <p>Contenido próximamente...</p>
-    </section>
-
-    <section id="compra">
-      <h1>Compra</h1>
-      <p>Contenido próximamente...</p>
-    </section>
-
-    <section id="politica">
-      <h1>Política de Stock</h1>
-      <p>Contenido próximamente...</p>
-    </section>
-
-    <section id="suzuki">
-      <h1>Lista de precios - Suzuki</h1>
-      <p>Aquí puedes cargar el Excel de precios más reciente.</p>
-    </section>
-    <section id="mazda">
-      <h1>Lista de precios - Mazda</h1>
-      <p>Aquí puedes cargar el Excel de precios más reciente.</p>
-    </section>
-    <section id="gwm">
-      <h1>Lista de precios - GWM</h1>
-      <p>Aquí puedes cargar el Excel de precios más reciente.</p>
-    </section>
-    <section id="changan">
-      <h1>Lista de precios - Changan</h1>
-      <p>Aquí puedes cargar el Excel de precios más reciente.</p>
-    </section>
-    <section id="renault">
-      <h1>Lista de precios - Renault</h1>
-      <p>Aquí puedes cargar el Excel de precios más reciente.</p>
+  <main class="main-content">
+    <section class="bienvenida">
+      <h1>Bienvenido al Dashboard Privado</h1>
+      <p>Aquí puedes incrustar tus gráficos, reportes, Power BI, etc.</p>
     </section>
   </main>
-
-  <footer>
-    <p>Creado por Daniel Bermedo | CDG DECAR</p>
-  </footer>
 </body>
 </html>
