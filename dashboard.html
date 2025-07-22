@@ -3,13 +3,32 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard CDG-DECAR</title>
+    <title>CDG DECAR - Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="dashboard">
+    <header>
+        <img src="assets/logo-decar.png" alt="Logo DECAR" class="logo">
+        <nav>
+            <ul>
+                <li><a href="#">CHANGAN</a></li>
+                <li><a href="#">MAZDA</a></li>
+                <li><a href="#">GWM</a></li>
+                <li><a href="#">RENAULT</a></li>
+                <li><a href="#">SUZUKI</a></li>
+                <li><a href="index.html" class="logout">Cerrar sesión</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
         <h1>Bienvenido al Dashboard Privado</h1>
         <p>Aquí puedes incrustar tus gráficos, reportes, Power BI, etc.</p>
-    </div>
+        <div class="embed-container">
+            <iframe title="Diferencia de costos" width="100%" height="400"
+                src="https://app.powerbi.com/view?r=eyJrIjoiNzk0MzE0ZjEtNjc3MS00NDI2LWI4NDktNWQyZWZhZjQwMWRlIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9"
+                frameborder="0" allowFullScreen="true">
+            </iframe>
+        </div>
+    </main>
 </body>
 </html>
