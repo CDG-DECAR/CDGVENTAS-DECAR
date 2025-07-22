@@ -3,92 +3,143 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Inicio - Control de Gestión DECAR</title>
+  <title>Dashboard Privado</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
       background-color: #f4f6f8;
-      color: #333;
+    }
+
+    .navbar {
+      background: linear-gradient(to right, #b70011, #d9001b);
+      color: white;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
+      justify-content: space-between;
+      padding: 8px 40px;
+      height: 56px;
+      box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .navbar img {
+      height: 34px;
+      margin-right: 16px;
+    }
+
+    .menu {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu li {
+      position: relative;
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 6px 0;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .menu a:hover {
+      border-bottom: 2px solid white;
+    }
+
+    .submenu ul {
+      display: none;
+      position: absolute;
+      background-color: white;
+      color: #cc0016;
+      list-style: none;
+      margin: 0;
+      padding: 10px 0;
+      top: 100%;
+      left: 0;
+      border-radius: 6px;
+      min-width: 150px;
+      box-shadow: 0px 4px 8px rgba(0,0,0,0.2);
+      z-index: 100;
+    }
+
+    .submenu:hover ul {
+      display: block;
+    }
+
+    .submenu ul li {
+      padding: 6px 20px;
+    }
+
+    .submenu ul li a {
+      color: #cc0016;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .submenu ul li a:hover {
+      background-color: #f2f2f2;
+    }
+
+    .content {
+      padding: 40px 20px;
       text-align: center;
     }
 
-    .logo {
-      width: 160px;
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      font-size: 28px;
-      margin-bottom: 8px;
-      color: #b70011;
-    }
-
-    h2 {
-      font-size: 16px;
-      margin-bottom: 24px;
-      font-weight: 500;
-    }
-
-    .card-container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-      max-width: 700px;
-      margin-top: 30px;
-    }
-
-    .card {
-      background-color: white;
-      border-radius: 10px;
-      padding: 20px 30px;
-      width: 180px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card a {
-      text-decoration: none;
-      color: #b70011;
-      font-weight: 600;
-      font-size: 15px;
-    }
-
-    .note {
-      margin-top: 40px;
-      font-size: 12px;
-      color: #999;
+    iframe {
+      width: 90%;
+      height: 500px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0px 0px 12px rgba(0,0,0,0.1);
     }
   </style>
+  <script>
+    const clave = prompt("Ingresa la contraseña:");
+    if (clave !== "cdgdecar") {
+      alert("Acceso denegado");
+      window.location.href = "https://www.google.com";
+    }
+  </script>
 </head>
 <body>
-
-  <img src="assets/logo-decar.png" alt="Logo DECAR" class="logo" />
-  <h1>CONTROL DE GESTIÓN DECAR</h1>
-  <h2>Encargado: Daniel Bermedo</h2>
-
-  <div class="card-container">
-    <div class="card"><a href="dashboard.html">DIF. COSTOS</a></div>
-    <div class="card"><a href="estadisticas.html">ESTADÍSTICAS</a></div>
-    <div class="card"><a href="inventario.html">INVENTARIO</a></div>
-    <div class="card"><a href="compra.html">COMPRA</a></div>
-    <div class="card"><a href="politica.html">POLÍTICA DE STOCK</a></div>
-    <div class="card"><a href="#">LISTAS DE PRECIO</a></div>
+  <div class="navbar">
+    <div style="display: flex; align-items: center;">
+      <img src="assets/logo-decar.png" alt="Logo DECAR" />
+    </div>
+    <ul class="menu">
+      <li><a href="#dif-costos">DIF. COSTOS</a></li>
+      <li><a href="#estadisticas">ESTADÍSTICAS</a></li>
+      <li><a href="#inventario">INVENTARIO</a></li>
+      <li><a href="#compra">COMPRA</a></li>
+      <li><a href="#politica">POLÍTICA DE STOCK</a></li>
+      <li class="submenu">
+        <a href="#">LISTAS DE PRECIO ▾</a>
+        <ul>
+          <li><a href="assets/listas/SUZUKI.xlsx" target="_blank">Suzuki</a></li>
+          <li><a href="assets/listas/MAZDA.xlsx" target="_blank">Mazda</a></li>
+          <li><a href="assets/listas/GWM.xlsx" target="_blank">GWM</a></li>
+          <li><a href="assets/listas/CHANGAN.xlsx" target="_blank">Changan</a></li>
+          <li><a href="assets/listas/RENAULT.xlsx" target="_blank">Renault</a></li>
+        </ul>
+      </li>
+      <li><a href="index.html">Cerrar sesión</a></li>
+    </ul>
   </div>
 
-  <p class="note">Acceso interno. Uso exclusivo del área de gestión.</p>
+  <div class="content">
+    <h1>Bienvenido al Panel de Control de Gestión DECAR</h1>
+    <p>Aquí puedes incrustar tus gráficos, reportes, Power BI, etc.</p>
 
+    <iframe title="Diferencia de costos"
+      src="https://app.powerbi.com/view?r=eyJrIjoiNzk0MzE0ZjEtNjc3MS00NDI2LWI4NDktNWQyZWZhZjQwMWRlIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9"
+      allowfullscreen></iframe>
+  </div>
 </body>
 </html>
-
