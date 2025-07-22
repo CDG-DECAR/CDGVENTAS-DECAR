@@ -58,12 +58,19 @@
       text-align: center;
     }
 
-    iframe {
-      width: 95%;
-      height: 600px;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    .button-link {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #b70011;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background-color 0.2s;
+    }
+
+    .button-link:hover {
+      background-color: #9c0010;
     }
   </style>
 </head>
@@ -85,10 +92,13 @@
 
   <div class="content">
     <h2>ANEXO DE VENTA INTERACTIVO</h2>
-    <p>Visualiza el archivo de cálculo de ventas directamente desde aquí:</p>
+    <p>Haz clic en el botón para abrir el archivo de cálculo de ventas:</p>
 
-    <iframe width="402" height="346" frameborder="0" scrolling="no" src="https://automovilesdecar-my.sharepoint.com/personal/dbermedo_decar_cl/_layouts/15/Doc.aspx?sourcedoc={3fdea584-dd34-418b-a1b0-a96e71f1efb0}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=cc"></iframe>
+    <a class="button-link" href="https://automovilesdecar-my.sharepoint.com/:x:/g/personal/dbermedo_decar_cl/EYSl3j803YtBobCpbnHx77ABEpR5mIVua8McM4oNTvxt8Q?e=RFvOaa" target="_blank">
+      Abrir Anexo de Venta
+    </a>
   </div>
 </body>
 </html>
+
 
