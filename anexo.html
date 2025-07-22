@@ -58,19 +58,39 @@
       text-align: center;
     }
 
-    .button-link {
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #b70011;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      font-weight: 600;
-      transition: background-color 0.2s;
+    iframe {
+      width: 95%;
+      height: 600px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
     }
 
-    .button-link:hover {
-      background-color: #9c0010;
+    /* Mostrar solo en móvil */
+    @media (max-width: 768px) {
+      iframe {
+        display: none;
+      }
+      .movil-only {
+        display: block !important;
+      }
+    }
+
+    .movil-only {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .movil-only a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #b70011;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 6px;
     }
   </style>
 </head>
@@ -92,13 +112,20 @@
 
   <div class="content">
     <h2>ANEXO DE VENTA INTERACTIVO</h2>
-    <p>Haz clic en el botón para abrir el archivo de cálculo de ventas:</p>
+    <p>Visualiza el archivo de cálculo de ventas directamente desde aquí:</p>
 
-    <a class="button-link" href="https://automovilesdecar-my.sharepoint.com/:x:/g/personal/dbermedo_decar_cl/EYSl3j803YtBobCpbnHx77ABEpR5mIVua8McM4oNTvxt8Q?e=RFvOaa" target="_blank">
-      Abrir Anexo de Venta
-    </a>
+    <!-- Iframe visible en escritorio -->
+    <iframe 
+      src="https://automovilesdecar-my.sharepoint.com/personal/dbermedo_decar_cl/_layouts/15/Doc.aspx?sourcedoc={3fdea584-dd34-418b-a1b0-a96e71f1efb0}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True">
+    </iframe>
+
+    <!-- Alternativa para móviles -->
+    <div class="movil-only">
+      <p>Desde el celular, abre el archivo directamente aquí:</p>
+      <a href="https://automovilesdecar-my.sharepoint.com/:x:/g/personal/dbermedo_decar_cl/EYSl3j803YtBobCpbnHx77ABEpR5mIVua8McM4oNTvxt8Q?e=RFvOaa" target="_blank">
+        📄 Abrir Anexo de Venta
+      </a>
+    </div>
   </div>
 </body>
 </html>
-
-
