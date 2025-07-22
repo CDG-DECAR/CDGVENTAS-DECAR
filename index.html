@@ -2,17 +2,75 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>CDG DECAR - Acceso</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Privado</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f6f8;
+    }
+
+    .navbar {
+      background: linear-gradient(90deg, #a80014, #e0002c);
+      padding: 0.5rem 2rem;
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar img {
+      height: 36px;
+      margin-right: 20px;
+    }
+
+    .navbar a {
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 14px;
+    }
+
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    .content {
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    iframe {
+      width: 90%;
+      height: 500px;
+      border: none;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-box">
-        <h2>Acceso Privado</h2>
-        <input type="password" id="password" placeholder="Contraseña">
-        <button onclick="checkPassword()">Ingresar</button>
-        <p id="error" class="error-msg"></p>
-    </div>
-    <script src="script.js"></script>
+
+  <div class="navbar">
+    <img src="assets/logo_dercocenter.png" alt="Derco Logo">
+    <img src="assets/logo_decar.png" alt="Decar Logo">
+    <a href="#">AUTOS NUEVOS</a>
+    <a href="#">AUTOS USADOS</a>
+    <a href="#">POST VENTA</a>
+    <a href="#">INGRESO DYP</a>
+    <a href="#">MANTENCIÓN DECAR</a>
+    <a href="#">PAGO ONLINE</a>
+    <a href="#">TIENDA DECAR</a>
+    <a href="#">SUCURSALES</a>
+    <a href="#" style="margin-left:auto;">Cerrar sesión</a>
+  </div>
+
+  <div class="content">
+    <h1>Bienvenido al Dashboard Privado</h1>
+    <p>Aquí puedes incrustar tus gráficos, reportes, Power BI, etc.</p>
+    <iframe title="Diferencia de costos" src="https://app.powerbi.com/view?r=eyJrIjoiNzk0MzE0ZjEtNjc3MS00NDI2LWI4NDktNWQyZWZhZjQwMWRlIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9" allowfullscreen></iframe>
+  </div>
+
 </body>
 </html>
