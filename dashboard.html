@@ -2,33 +2,98 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>CDG DECAR - Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>Dashboard DECAR</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+    }
+
+    .navbar {
+      background-color: #c40024;
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 10px 20px;
+      justify-content: space-between;
+    }
+
+    .navbar .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .navbar .logo img {
+      height: 35px;
+      margin-right: 10px;
+    }
+
+    .navbar .menu {
+      display: flex;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .navbar .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    .navbar .menu a:hover {
+      text-decoration: underline;
+    }
+
+    .logout-btn {
+      background-color: white;
+      color: #c40024;
+      border: none;
+      padding: 8px 15px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .content {
+      padding: 30px;
+      text-align: center;
+    }
+
+    iframe {
+      margin-top: 20px;
+      width: 90%;
+      height: 600px;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <img src="assets/logo-decar.png" alt="Logo DECAR" class="logo">
-        <nav>
-            <ul>
-                <li><a href="#">CHANGAN</a></li>
-                <li><a href="#">MAZDA</a></li>
-                <li><a href="#">GWM</a></li>
-                <li><a href="#">RENAULT</a></li>
-                <li><a href="#">SUZUKI</a></li>
-                <li><a href="index.html" class="logout">Cerrar sesión</a></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        <h1>Bienvenido al Dashboard Privado</h1>
-        <p>Aquí puedes incrustar tus gráficos, reportes, Power BI, etc.</p>
-        <div class="embed-container">
-            <iframe title="Diferencia de costos" width="100%" height="400"
-                src="https://app.powerbi.com/view?r=eyJrIjoiNzk0MzE0ZjEtNjc3MS00NDI2LWI4NDktNWQyZWZhZjQwMWRlIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9"
-                frameborder="0" allowFullScreen="true">
-            </iframe>
-        </div>
-    </main>
+
+  <div class="navbar">
+    <div class="logo">
+      <img src="assets/logo-decar.png" alt="Logo DECAR">
+      <strong>DECAR</strong>
+    </div>
+    <div class="menu">
+      <a href="#">CHANGAN</a>
+      <a href="#">MAZDA</a>
+      <a href="#">GWM</a>
+      <a href="#">RENAULT</a>
+      <a href="#">SUZUKI</a>
+    </div>
+    <button class="logout-btn" onclick="window.location.href='index.html'">Cerrar sesión</button>
+  </div>
+
+  <div class="content">
+    <h2>Dashboard Privado</h2>
+    <p>Aquí puedes incrustar tus gráficos, reportes, Power BI, etc.</p>
+    <iframe title="Diferencia de costos" src="https://app.powerbi.com/view?r=eyJrIjoiNzk0MzE0ZjEtNjc3MS00NDI2LWI4NDktNWQyZWZhZjQwMWRlIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9" allowFullScreen="true"></iframe>
+  </div>
+
 </body>
 </html>
