@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Privado</title>
+  <title>Inicio - Control de Gestión DECAR</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -88,16 +88,27 @@
     }
 
     .content {
-      padding: 40px 20px;
+      padding: 60px 20px;
       text-align: center;
     }
 
-    iframe {
-      width: 90%;
-      height: 500px;
-      border: none;
-      border-radius: 8px;
-      box-shadow: 0px 0px 12px rgba(0,0,0,0.1);
+    .hero {
+      background-color: white;
+      border-radius: 12px;
+      padding: 60px 40px;
+      margin: auto;
+      max-width: 800px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #333;
     }
   </style>
   <script>
@@ -114,11 +125,11 @@
       <img src="./assets/logo-decar.png" alt="Logo DECAR" />
     </div>
     <ul class="menu">
-      <li><a href="#dif-costos">DIF. COSTOS</a></li>
-      <li><a href="#estadisticas">ESTADÍSTICAS</a></li>
-      <li><a href="#inventario">INVENTARIO</a></li>
-      <li><a href="#compra">COMPRA</a></li>
-      <li><a href="#politica">POLÍTICA DE STOCK</a></li>
+      <li><a href="dashboard.html#dif-costos">DIF. COSTOS</a></li>
+      <li><a href="dashboard.html#estadisticas">ESTADÍSTICAS</a></li>
+      <li><a href="dashboard.html#inventario">INVENTARIO</a></li>
+      <li><a href="dashboard.html#compra">COMPRA</a></li>
+      <li><a href="dashboard.html#politica">POLÍTICA DE STOCK</a></li>
       <li class="submenu">
         <a href="#">LISTAS DE PRECIO ▾</a>
         <ul>
@@ -134,12 +145,11 @@
   </div>
 
   <div class="content">
-    <h1>Bienvenido al Panel de Control de Gestión DECAR</h1>
-    <p>Aquí puedes incrustar tus gráficos, reportes, Power BI, etc.</p>
-
-    <iframe title="Diferencia de costos"
-      src="https://app.powerbi.com/view?r=eyJrIjoiNzk0MzE0ZjEtNjc3MS00NDI2LWI4NDktNWQyZWZhZjQwMWRlIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9"
-      allowfullscreen></iframe>
+    <div class="hero">
+      <h1>CONTROL DE GESTIÓN DECAR</h1>
+      <p>Encargado: Daniel Bermedo</p>
+      <p>Accede a los reportes estratégicos, dashboards, seguimiento de inventarios y herramientas clave para la gestión eficiente de la operación comercial.</p>
+    </div>
   </div>
 </body>
 </html>
