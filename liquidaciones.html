@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liquidaciones - Control de Gestión DECAR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: #f4f6f8;
+    }
+
+    .navbar {
+      background: linear-gradient(to right, #b70011, #d9001b);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 40px;
+      height: 56px;
+      box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .navbar img {
+      height: 34px;
+      margin-right: 16px;
+    }
+
+    .menu {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .menu li {
+      position: relative;
+    }
+
+    .menu a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 6px 0;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .menu a:hover {
+      border-bottom: 2px solid white;
+    }
+
+    .content {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    iframe {
+      width: 95%;
+      height: 700px;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <div class="navbar">
+    <div style="display: flex; align-items: center;">
+      <img src="./assets/logo-decar.png" alt="Logo DECAR" />
+    </div>
+    <ul class="menu">
+      <li><a href="index.html">INICIO</a></li>
+      <li><a href="dashboard.html#dif-costos">DIF. COSTOS</a></li>
+      <li><a href="dashboard.html#estadisticas">ESTADÍSTICAS</a></li>
+      <li><a href="dashboard.html#inventario">INVENTARIO</a></li>
+      <li><a href="dashboard.html#compra">COMPRA</a></li>
+      <li><a href="politica.html">POLÍTICA DE STOCK</a></li>
+      <li><a href="liquidaciones.html">LIQUIDACIONES</a></li>
+      <li><a href="anexo.html">ANEXO VENTA</a></li>
+    </ul>
+  </div>
+
+  <div class="content">
+    <h2>Dashboard de Liquidaciones</h2>
+    <p>Visualiza el informe interactivo de liquidaciones desde Power BI:</p>
+
+    <iframe title="LIQUIDACION" src="https://app.powerbi.com/view?r=eyJrIjoiY2VhZThlYzUtOTE3ZC00ZDc3LWI3ZDMtMzBlMDgwODcxZTIzIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9" allowFullScreen="true"></iframe>
+  </div>
+</body>
+</html>
