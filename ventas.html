@@ -1,45 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ventas - DECAR</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     body {
       margin: 0;
       font-family: 'Montserrat', sans-serif;
       background-color: #f4f6f8;
-      text-align: center;
     }
-
     .navbar {
       background: linear-gradient(to right, #b70011, #d9001b);
       color: white;
-      padding: 12px;
-      font-weight: bold;
-      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 40px;
+      height: 56px;
+      box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
     }
-
+    .navbar img {
+      height: 34px;
+    }
     .content {
-      padding: 30px 10px;
+      padding: 40px 20px;
+      text-align: center;
     }
-
-    iframe {
-      width: 95%;
-      max-width: 1100px;
-      height: 650px;
-      border: none;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 40px auto;
+    }
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      border-radius: 8px;
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card a {
+      text-decoration: none;
+      color: #cc0016;
+      font-weight: bold;
+      font-size: 16px;
+      display: block;
+    }
+    .card span {
+      font-size: 40px;
+      display: block;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="navbar">📈 DECAR Araucanía - Ventas</div>
-
+  <div class="navbar">
+    <img src="./assets/logo-decar.png" alt="Logo DECAR" />
+  </div>
   <div class="content">
-    <iframe title="PowerBI DERCO" src="https://app.powerbi.com/view?r=eyJrIjoiNDcwMjMxNTQtOWZkNi00MGEyLTk0NWItZDhlZGEzY2NjNWE4IiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9" allowfullscreen></iframe>
+    <h2>VENTAS DECAR</h2>
+    <p>Paneles de análisis de ventas</p>
+    <div class="grid">
+      <div class="card">
+        <a href="ventas-araucania.html"><span>📊</span>DECAR Araucanía</a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
+
