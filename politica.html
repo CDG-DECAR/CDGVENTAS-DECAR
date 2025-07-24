@@ -25,31 +25,18 @@
 
     .navbar img {
       height: 34px;
-      margin-right: 16px;
     }
 
-    .menu {
-      display: flex;
-      list-style: none;
-      gap: 28px;
-      margin: 0;
-      padding: 0;
-    }
-
-    .menu li {
-      position: relative;
-    }
-
-    .menu a {
+    .nav-links a {
       color: white;
       text-decoration: none;
       font-weight: 600;
       font-size: 14px;
-      padding: 6px 0;
+      margin-left: 24px;
       transition: all 0.2s ease-in-out;
     }
 
-    .menu a:hover {
+    .nav-links a:hover {
       border-bottom: 2px solid white;
     }
 
@@ -68,20 +55,17 @@
   </style>
 </head>
 <body>
+  <!-- Barra de navegación común -->
   <div class="navbar">
     <div style="display: flex; align-items: center;">
       <img src="./assets/logo-decar.png" alt="Logo DECAR" />
     </div>
-    <ul class="menu">
-      <li><a href="index.html">INICIO</a></li>
-      <li><a href="dashboard.html#dif-costos">DIF. COSTOS</a></li>
-      <li><a href="liquidaciones.html">LIQUIDACIONES</a></li>
-      <li><a href="dashboard.html#estadisticas">ESTADÍSTICAS</a></li>
-      <li><a href="dashboard.html#inventario">INVENTARIO</a></li>
-      <li><a href="dashboard.html#compra">COMPRA</a></li>
-      <li><a href="politica.html">POLÍTICA DE STOCK</a></li>
-      <li><a href="anexo.html">ANEXO VENTA</a></li>
-    </ul>
+    <div class="nav-links">
+      <a href="index.html">🏠 Inicio</a>
+      <a href="dashboard.html">📊 Control de Gestión</a>
+      <a href="ventas.html">💼 Ventas</a>
+      <a href="index.html">⛔ Cerrar sesión</a>
+    </div>
   </div>
 
   <div class="content">
