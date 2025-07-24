@@ -12,13 +12,44 @@
       background-color: #f4f6f8;
       text-align: center;
     }
+
+    .navbar {
+      background: linear-gradient(to right, #b70011, #d9001b);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 40px;
+      height: 56px;
+      box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .navbar img {
+      height: 34px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      margin-left: 24px;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .nav-links a:hover {
+      border-bottom: 2px solid white;
+    }
+
     .container {
       padding: 80px 20px;
     }
+
     h1 {
       font-size: 32px;
       margin-bottom: 20px;
     }
+
     .menu-inicial {
       display: flex;
       justify-content: center;
@@ -26,6 +57,7 @@
       flex-wrap: wrap;
       margin-top: 60px;
     }
+
     .opcion-box {
       background-color: white;
       width: 260px;
@@ -38,13 +70,16 @@
       text-decoration: none;
       color: #a00000;
     }
+
     .opcion-box:hover {
       transform: scale(1.05);
     }
+
     .opcion-box img {
       width: 80px;
       margin-bottom: 20px;
     }
+
     .opcion-box p {
       font-size: 20px;
       font-weight: bold;
@@ -60,6 +95,18 @@
   </script>
 </head>
 <body>
+
+  <!-- Barra común -->
+  <div class="navbar">
+    <img src="./assets/logo-decar.png" alt="Logo DECAR" />
+    <div class="nav-links">
+      <a href="index.html">🏠 Inicio</a>
+      <a href="dashboard.html">📊 Control de Gestión</a>
+      <a href="ventas.html">💼 Ventas</a>
+      <a href="index.html">⛔ Cerrar sesión</a>
+    </div>
+  </div>
+
   <div class="container">
     <h1>CONTROL DE GESTIÓN DECAR</h1>
     <p>Selecciona una opción para continuar</p>
@@ -74,6 +121,8 @@
       </a>
     </div>
   </div>
+
 </body>
 </html>
+
 
