@@ -11,6 +11,7 @@
       font-family: 'Montserrat', sans-serif;
       background-color: #f4f6f8;
     }
+
     .navbar {
       background: linear-gradient(to right, #b70011, #d9001b);
       color: white;
@@ -21,13 +22,29 @@
       height: 56px;
       box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
     }
+
     .navbar img {
       height: 34px;
     }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      margin-left: 24px;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .nav-links a:hover {
+      border-bottom: 2px solid white;
+    }
+
     .contenido {
       padding: 40px;
       text-align: center;
     }
+
     iframe {
       border: none;
       border-radius: 12px;
@@ -39,8 +56,16 @@
   </style>
 </head>
 <body>
+
+  <!-- Barra común de navegación -->
   <div class="navbar">
     <img src="./assets/logo-decar.png" alt="Logo DECAR">
+    <div class="nav-links">
+      <a href="index.html">🏠 Inicio</a>
+      <a href="dashboard.html">📊 Control de Gestión</a>
+      <a href="ventas.html">💼 Ventas</a>
+      <a href="index.html">⛔ Cerrar sesión</a>
+    </div>
   </div>
 
   <div class="contenido">
@@ -49,6 +74,6 @@
 
     <iframe title="Diferencia de costos" src="https://app.powerbi.com/view?r=eyJrIjoiNzk0MzE0ZjEtNjc3MS00NDI2LWI4NDktNWQyZWZhZjQwMWRlIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9" allowFullScreen="true"></iframe>
   </div>
+
 </body>
 </html>
-
