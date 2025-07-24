@@ -72,11 +72,18 @@
     <h2>POLÍTICA DE STOCK</h2>
     <p>Consulta aquí las políticas actuales para la gestión del inventario:</p>
 
-    <!-- Embed escritorio -->
     <iframe 
-      src="https://automovilesdecar-my.sharepoint.com/personal/dbermedo_decar_cl/_layouts/15/Doc.aspx?sourcedoc={11ecb0b0-42a7-41f2-aa63-a5ca1a043d0c}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=cc"
+      id="excelFrame"
       allowfullscreen>
     </iframe>
+
+    <script>
+      const baseUrl = "https://automovilesdecar-my.sharepoint.com/personal/dbermedo_decar_cl/_layouts/15/Doc.aspx?sourcedoc={11ecb0b0-42a7-41f2-aa63-a5ca1a043d0c}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=cc";
+      const timestamp = new Date().getTime();
+      document.getElementById("excelFrame").src = `${baseUrl}&ts=${timestamp}`;
+    </script>
+
   </div>
 </body>
 </html>
+
