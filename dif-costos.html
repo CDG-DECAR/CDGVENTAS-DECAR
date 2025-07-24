@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Diferencias de Costo - DECAR</title>
+  <title>Control de Gestión - DECAR</title>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
   <style>
     body {
@@ -24,17 +24,39 @@
     .navbar img {
       height: 34px;
     }
-    .contenido {
-      padding: 40px;
+    .content {
+      padding: 40px 20px;
       text-align: center;
     }
-    iframe {
-      border: none;
-      border-radius: 12px;
-      box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.1);
-      width: 100%;
-      max-width: 1200px;
-      height: 650px;
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      max-width: 900px;
+      margin: 40px auto;
+    }
+    .card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      text-align: center;
+      transition: transform 0.2s ease;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card a {
+      text-decoration: none;
+      color: #cc0016;
+      font-weight: bold;
+      font-size: 16px;
+      display: block;
+    }
+    .card span {
+      font-size: 40px;
+      display: block;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -42,12 +64,19 @@
   <div class="navbar">
     <img src="./assets/logo-decar.png" alt="Logo DECAR">
   </div>
-
-  <div class="contenido">
-    <h2>Diferencias de Costo</h2>
-    <p>Visualización del análisis actualizado desde Power BI</p>
-
-    <iframe title="Diferencia de costos" src="https://app.powerbi.com/view?r=eyJrIjoiNzk0MzE0ZjEtNjc3MS00NDI2LWI4NDktNWQyZWZhZjQwMWRlIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9" allowFullScreen="true"></iframe>
+  <div class="content">
+    <h2>CONTROL DE GESTIÓN DECAR</h2>
+    <p>Encargado: Daniel Bermedo</p>
+    <div class="grid">
+      <div class="card"><a href="dif-costos.html"><span>📊</span>DIF. COSTOS</a></div>
+      <div class="card"><a href="estadisticas.html"><span>📈</span>ESTADÍSTICAS</a></div>
+      <div class="card"><a href="inventario.html"><span>🚗</span>INVENTARIO</a></div>
+      <div class="card"><a href="compra.html"><span>🛒</span>COMPRA</a></div>
+      <div class="card"><a href="politica.html"><span>📋</span>POLÍTICA DE STOCK</a></div>
+      <div class="card"><a href="listas.html"><span>🧾</span>LISTAS DE PRECIO</a></div>
+      <div class="card"><a href="anexo.html"><span>🧲</span>ANEXO VENTA</a></div>
+    </div>
   </div>
 </body>
 </html>
+
