@@ -45,9 +45,20 @@
       text-align: center;
     }
 
-    iframe {
+    .responsive-iframe-container {
+      position: relative;
       width: 95%;
-      height: 650px;
+      max-width: 1200px;
+      padding-top: 56.25%; /* relación 16:9 */
+      margin: 0 auto;
+    }
+
+    .responsive-iframe-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       border: none;
       border-radius: 8px;
       box-shadow: 0 0 12px rgba(0,0,0,0.1);
@@ -72,11 +83,13 @@
     <h2>POLÍTICA DE STOCK</h2>
     <p>Consulta aquí las políticas actuales para la gestión del inventario:</p>
 
-    <iframe 
-      title="Política de Stock"
-      src="https://app.powerbi.com/view?r=eyJrIjoiZjlkNDBkMDEtZjAxOC00ZmZjLTg0YTgtOWZjNWE1OTgzMDRmIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9"
-      allowfullscreen>
-    </iframe>
+    <div class="responsive-iframe-container">
+      <iframe 
+        title="Política de Stock"
+        src="https://app.powerbi.com/view?r=eyJrIjoiZjlkNDBkMDEtZjAxOC00ZmZjLTg0YTgtOWZjNWE1OTgzMDRmIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9"
+        allowfullscreen>
+      </iframe>
+    </div>
   </div>
 </body>
 </html>
