@@ -47,7 +47,7 @@
 
     iframe {
       width: 95%;
-      height: 600px;
+      height: 650px;
       border: none;
       border-radius: 8px;
       box-shadow: 0 0 12px rgba(0,0,0,0.1);
@@ -73,16 +73,10 @@
     <p>Consulta aquí las políticas actuales para la gestión del inventario:</p>
 
     <iframe 
-      id="excelFrame"
+      title="Política de Stock"
+      src="https://app.powerbi.com/view?r=eyJrIjoiZjlkNDBkMDEtZjAxOC00ZmZjLTg0YTgtOWZjNWE1OTgzMDRmIiwidCI6IjQwNzhiNTAxLWIxZTItNDQ3MS04MGVhLWFhZjczMTZmODViMSJ9"
       allowfullscreen>
     </iframe>
-
-    <script>
-      const baseUrl = "https://automovilesdecar-my.sharepoint.com/personal/dbermedo_decar_cl/_layouts/15/Doc.aspx?sourcedoc={11ecb0b0-42a7-41f2-aa63-a5ca1a043d0c}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True&wdInConfigurator=True&wdInConfigurator=True&edaebf=cc";
-      const timestamp = new Date().getTime();
-      document.getElementById("excelFrame").src = `${baseUrl}&ts=${timestamp}`;
-    </script>
-
   </div>
 </body>
 </html>
