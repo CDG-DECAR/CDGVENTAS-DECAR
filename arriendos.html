@@ -23,6 +23,36 @@
     .th { @apply text-left text-xs font-semibold uppercase tracking-wider text-gray-500; }
     .td { @apply whitespace-nowrap text-sm text-gray-800; }
   </style>
+  <script>
+  // Fallback para "Agregar vehículo" si el script principal no enlazó eventos
+  (function(){
+    var btn = document.getElementById('btnAddVeh');
+    if (!btn) return;
+    if (btn._fallbackReady) return; // evita duplicar
+    btn._fallbackReady = true;
+
+    btn.addEventListener('click', function(){
+      var patente = prompt('Patente'); if (!patente) return;
+      var modelo  = prompt('Modelo') || '-';
+      var km      = Number(prompt('KM (opcional)') || 0);
+      var tarifa  = Number(prompt('Tarifa diaria CLP (ej. 15000)') || 0);
+
+      var key = 'decar_arriendos_vehiculos';
+      var vehs = [];
+      try { vehs = JSON.parse(localStorage.getItem(key) || '[]'); } catch(e){}
+
+      if (vehs.some(v => v.patente === patente)) {
+        alert('Esa patente ya existe.');
+        return;
+      }
+
+      vehs.push({ patente: patente, modelo: modelo, km: isNaN(km)?0:km, estado: 'DISPONIBLE', tarifa: isNaN(tarifa)?0:tarifa });
+      localStorage.setItem(key, JSON.stringify(vehs));
+      alert('Vehículo agregado. Recarga la página para verlo en la flota.');
+      location.reload();
+    });
+  })();
+</script>
 </head>
 <body class="h-full bg-gray-50 text-gray-900">
   <header class="sticky top-0 z-10 bg-gradient-to-r from-red-700 to-red-600 text-white shadow">
