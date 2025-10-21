@@ -66,14 +66,50 @@
           </div>
         </div>
 
+        <!-- Datos del vehículo (autocompletados) -->
+        <div class="grid-3 bg-gray-50 rounded-xl p-3">
+          <div>
+            <span class="label">Modelo</span>
+            <div id="vModelo" class="mt-1 text-sm text-gray-800">—</div>
+          </div>
+          <div>
+            <span class="label">Tarifa diaria registrada</span>
+            <div id="vTarifa" class="mt-1 text-sm text-gray-800">—</div>
+          </div>
+          <div>
+            <span class="label">KM actual</span>
+            <div id="vKm" class="mt-1 text-sm text-gray-800">—</div>
+          </div>
+        </div>
+
         <div class="grid-3">
           <div>
             <label class="label">Fecha/Hora inicio</label>
             <input id="fechaInicio" type="datetime-local" class="input" />
           </div>
           <div>
+            <label class="label">Fecha/Hora estimada fin</label>
+            <input id="fechaEstimada" type="datetime-local" class="input" />
+          </div>
+          <div>
             <label class="label">Tarifa diaria (CLP)</label>
             <input id="tarifa" type="number" step="1" min="0" class="input" placeholder="Ej. 15000" />
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div>
+            <label class="label">Responsable</label>
+            <input id="responsable" class="input" placeholder="Nombre del responsable" />
+          </div>
+          <div>
+            <label class="label">Autoriza</label>
+            <select id="autoriza" class="input">
+              <option value="">— Seleccione —</option>
+              <option>Luis Poblete</option>
+              <option>Daniel Bermedo</option>
+              <option>Diego Valenzuela</option>
+            </select>
           </div>
           <div>
             <label class="label">Motivo</label>
@@ -115,36 +151,12 @@
               <th class="th">Patente</th>
               <th class="th">Cliente</th>
               <th class="th">Inicio</th>
-              <th class="th">Tarifa</th>
-              <th class="th">Motivo</th>
-              <th class="th">KM salida</th>
-              <th class="th">Obs.</th>
-              <th class="th">Estado</th>
-              <th class="th">Acciones</th>
-            </tr>
-          </thead>
-          <tbody id="tbodyCurso"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- HISTÓRICO -->
-    <section class="card">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="text-xl font-bold">Histórico finalizados</h2>
-        <input id="buscarHist" class="input !w-56" placeholder="Buscar por patente/cliente" />
-      </div>
-      <div class="overflow-x-auto">
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="th">Patente</th>
-              <th class="th">Cliente</th>
-              <th class="th">Inicio</th>
               <th class="th">Fin</th>
               <th class="th">Días</th>
               <th class="th">Tarifa</th>
               <th class="th">Costo total</th>
+              <th class="th">Responsable</th>
+              <th class="th">Autoriza</th>
               <th class="th">KM salida</th>
               <th class="th">KM retorno</th>
               <th class="th">Obs. cierre</th>
@@ -282,10 +294,10 @@
     function seedDemo() {
       if (!DB.vehiculos().length) {
         DB.saveVehiculos([
-          { patente: 'VLFF22', modelo: 'Suzuki Baleno', km: 25340, estado: 'DISPONIBLE' },
-          { patente: 'JXGH11', modelo: 'Mazda CX-5', km: 48500, estado: 'DISPONIBLE' },
-          { patente: 'KTSP90', modelo: 'Changan Hunter', km: 12100, estado: 'DISPONIBLE' },
-          { patente: 'PKYZ31', modelo: 'Renault Stepway', km: 33210, estado: 'DISPONIBLE' },
+          { patente: 'VLFF22', modelo: 'Suzuki Baleno', km: 25340, estado: 'DISPONIBLE', tarifa: 15000 },
+          { patente: 'JXGH11', modelo: 'Mazda CX-5', km: 48500, estado: 'DISPONIBLE', tarifa: 18000 },
+          { patente: 'KTSP90', modelo: 'Changan Hunter', km: 12100, estado: 'DISPONIBLE', tarifa: 20000 },
+          { patente: 'PKYZ31', modelo: 'Renault Stepway', km: 33210, estado: 'DISPONIBLE', tarifa: 14000 },
         ]);
       }
       if (!DB.arriendos().length) DB.saveArriendos([]);
@@ -297,10 +309,21 @@
     const tbodyCurso = el('tbodyCurso');
     const tbodyHist  = el('tbodyHist');
     const tbodyFlota = el('tbodyFlota');
+    const vModelo = el('vModelo');
+    const vTarifa = el('vTarifa');
+    const vKm = el('vKm');
 
     function cargarPatentesDisponibles() {
       const vehs = DB.vehiculos().filter(v => v.estado === 'DISPONIBLE');
       patenteSel.innerHTML = vehs.map(v => `<option value="${v.patente}">${v.patente} · ${v.modelo}</option>`).join('');
+      if (!vehs.length) {
+        patenteSel.innerHTML = '<option value="">— No hay vehículos disponibles —</option>';
+      }
+      // Actualiza panel de datos del primer seleccionado
+      setTimeout(()=>{
+        actualizarPanelVehiculo();
+      },0);
+    }">${v.patente} · ${v.modelo}</option>`).join('');
       if (!vehs.length) {
         patenteSel.innerHTML = '<option value="">— No hay vehículos disponibles —</option>';
       }
@@ -313,6 +336,23 @@
       tbodyCurso.innerHTML = rows.map(a => `
         <tr class="border-t">
           <td class="td font-semibold">${a.patente}</td>
+          <td class="td">${a.cliente}</td>
+          <td class="td">${fmtDateTime(a.inicio)}</td>
+          <td class="td">${a.estimadoFin ? fmtDateTime(a.estimadoFin) : '-'}</td>
+          <td class="td">${a.tarifa ? fmtCLP.format(a.tarifa) : '-'}</td>
+          <td class="td">${a.motivo || '-'}</td>
+          <td class="td">${a.responsable || '-'}</td>
+          <td class="td">${a.autoriza || '-'}</td>
+          <td class="td">${a.kmSalida ?? '-'}</td>
+          <td class="td">${a.obsInicio || '-'}</td>
+          <td class="td"><span class="badge badge-live">EN CURSO</span></td>
+          <td class="td">
+            <button class="btn btn-primary text-xs" onclick='abrirFin("${a.id}")'>Finalizar</button>
+          </td>
+        </tr>
+      `).join('');
+      el('kpiEnCurso').textContent = rows.length;
+    }</td>
           <td class="td">${a.cliente}</td>
           <td class="td">${fmtDateTime(a.inicio)}</td>
           <td class="td">${a.tarifa ? fmtCLP.format(a.tarifa) : '-'}</td>
@@ -352,6 +392,26 @@
             <td class="td">${d}</td>
             <td class="td">${a.tarifa ? fmtCLP.format(a.tarifa) : '-'}</td>
             <td class="td">${fmtCLP.format(costo)}</td>
+            <td class="td">${a.responsable || '-'}</td>
+            <td class="td">${a.autoriza || '-'}</td>
+            <td class="td">${a.kmSalida ?? '-'}</td>
+            <td class="td">${a.kmRetorno ?? '-'}</td>
+            <td class="td">${a.obsCierre || '-'}</td>
+          </tr>`;
+      }).join('');
+
+      el('kpiDias').textContent = diasMes;
+      el('kpiFacturacion').textContent = fmtCLP.format(factMes);
+    }
+        return `
+          <tr class="border-t">
+            <td class="td font-semibold">${a.patente}</td>
+            <td class="td">${a.cliente}</td>
+            <td class="td">${fmtDateTime(a.inicio)}</td>
+            <td class="td">${fmtDateTime(a.fin)}</td>
+            <td class="td">${d}</td>
+            <td class="td">${a.tarifa ? fmtCLP.format(a.tarifa) : '-'}</td>
+            <td class="td">${fmtCLP.format(costo)}</td>
             <td class="td">${a.kmSalida ?? '-'}</td>
             <td class="td">${a.kmRetorno ?? '-'}</td>
             <td class="td">${a.obsCierre || '-'}</td>
@@ -367,6 +427,12 @@
       tbodyFlota.innerHTML = rows.map(v => `
         <tr class="border-t">
           <td class="td font-semibold">${v.patente}</td>
+          <td class="td">${v.modelo}</td>
+          <td class="td">${v.km?.toLocaleString('es-CL') ?? '-'}</td>
+          <td class="td">${v.estado === 'DISPONIBLE' ? '<span class="badge badge-end">DISPONIBLE</span>' : '<span class="badge badge-live">EN CURSO</span>'}</td>
+        </tr>
+      `).join('');
+    }</td>
           <td class="td">${v.modelo}</td>
           <td class="td">${v.km?.toLocaleString('es-CL') ?? '-'}</td>
           <td class="td">${v.estado === 'DISPONIBLE' ? '<span class="badge badge-end">DISPONIBLE</span>' : '<span class="badge badge-live">EN CURSO</span>'}</td>
@@ -409,6 +475,42 @@
     }
     el('formPrestar').addEventListener('submit', (e) => {
       e.preventDefault();
+      const pat = el('patente').value;
+      if (!pat) return alert('No hay vehículo disponible seleccionado.');
+      const vehs = DB.vehiculos();
+      const v = vehs.find(x => x.patente === pat);
+      if (!v || v.estado !== 'DISPONIBLE') return alert('La patente seleccionada no está disponible.');
+
+      const a = DB.arriendos();
+      const nuevo = {
+        id: 'A' + crypto.randomUUID(),
+        patente: v.patente,
+        cliente: el('cliente').value.trim() || '-',
+        rut: el('rut').value.trim() || '-',
+        motivo: el('motivo').value.trim(),
+        inicio: el('fechaInicio').value ? new Date(el('fechaInicio').value).toISOString() : new Date().toISOString(),
+        estimadoFin: el('fechaEstimada').value ? new Date(el('fechaEstimada').value).toISOString() : null,
+        tarifa: Number(el('tarifa').value || v.tarifa || 0),
+        responsable: el('responsable').value.trim(),
+        autoriza: el('autoriza').value,
+        kmSalida: el('kmSalida').value ? Number(el('kmSalida').value) : v.km ?? null,
+        obsInicio: el('obsInicio').value.trim(),
+        estado: 'EN CURSO'
+      };
+
+      a.push(nuevo);
+      DB.saveArriendos(a);
+
+      v.estado = 'EN CURSO';
+      if (nuevo.kmSalida != null) v.km = nuevo.kmSalida;
+      DB.saveVehiculos(vehs);
+
+      cargarPatentesDisponibles();
+      renderCurso();
+      renderFlota();
+      e.target.reset();
+      el('fechaInicio').value = hoyLocalDatetime();
+    });
       const pat = el('patente').value;
       if (!pat) return alert('No hay vehículo disponible seleccionado.');
       const vehs = DB.vehiculos();
@@ -495,6 +597,16 @@
       const patente = prompt('Patente'); if (!patente) return;
       const modelo = prompt('Modelo');
       const km = Number(prompt('KM (opcional)')||0);
+      const tarifa = Number(prompt('Tarifa diaria CLP (por ejemplo 15000)')||0);
+      const vehs = DB.vehiculos();
+      if (vehs.some(v => v.patente===patente)) return alert('Esa patente ya existe.');
+      vehs.push({ patente, modelo: modelo||'-', km: isNaN(km)?0:km, estado:'DISPONIBLE', tarifa: isNaN(tarifa)?0:tarifa });
+      DB.saveVehiculos(vehs);
+      cargarPatentesDisponibles();
+      renderFlota();
+    }); if (!patente) return;
+      const modelo = prompt('Modelo');
+      const km = Number(prompt('KM (opcional)')||0);
       const vehs = DB.vehiculos();
       if (vehs.some(v => v.patente===patente)) return alert('Esa patente ya existe.');
       vehs.push({ patente, modelo: modelo||'-', km: isNaN(km)?0:km, estado:'DISPONIBLE' });
@@ -568,6 +680,24 @@
     });
 
     // ======== Init ========
+    // Actualiza panel de datos del vehículo según selección
+    function actualizarPanelVehiculo(){
+      const pat = el('patente').value;
+      const v = DB.vehiculos().find(x => x.patente === pat);
+      if (v){
+        vModelo.textContent = v.modelo || '-';
+        vTarifa.textContent = v.tarifa ? fmtCLP.format(v.tarifa) : '-';
+        vKm.textContent = (v.km ?? '-').toLocaleString ? v.km.toLocaleString('es-CL') : (v.km ?? '-');
+        // Prefill campos
+        if (!el('tarifa').value) el('tarifa').value = v.tarifa || '';
+        if (!el('kmSalida').value) el('kmSalida').value = v.km || '';
+      } else {
+        vModelo.textContent = '—'; vTarifa.textContent='—'; vKm.textContent='—';
+      }
+    }
+
+    patenteSel.addEventListener('change', actualizarPanelVehiculo);
+
     (function init(){
       seedDemo();
       cargarPatentesDisponibles();
@@ -589,3 +719,4 @@
   </script>
 </body>
 </html>
+
