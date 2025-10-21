@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CDG DECAR · Arriendos de Cortesía (MVP)</title>
+  <!-- Tailwind via CDN for quick styling on GitHub Pages -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="color-scheme" content="light" />
+  <style>
+    .card { @apply bg-white rounded-2xl shadow p-5; }
+    .btn  { @apply inline-flex items-center justify-center rounded-xl px-4 py-2 font-semibold shadow; }
+    .btn-primary { @apply bg-red-600 text-white hover:bg-red-700; }
+    .btn-secondary { @apply bg-gray-100 hover:bg-gray-200; }
+    .badge { @apply text-xs font-semibold rounded-full px-2 py-1; }
+    .badge-live { @apply bg-green-100 text-green-700; }
+    .badge-end  { @apply bg-gray-100 text-gray-700; }
+    .input { @apply w-full rounded-xl border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-red-500; }
+    .label { @apply text-sm font-semibold text-gray-700; }
+    .grid-2 { @apply grid grid-cols-1 md:grid-cols-2 gap-4; }
+    .grid-3 { @apply grid grid-cols-1 md:grid-cols-3 gap-4; }
+    .table { @apply min-w-full text-sm; }
+    .th { @apply text-left text-xs font-semibold uppercase tracking-wider text-gray-500; }
+    .td { @apply whitespace-nowrap text-sm text-gray-800; }
+  </style>
+</head>
+<body class="h-full bg-gray-50 text-gray-900">
+  <header class="sticky top-0 z-10 bg-gradient-to-r from-red-700 to-red-600 text-white shadow">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="https://raw.githubusercontent.com/simple-icons/simple-icons/develop/icons/suzuki.svg" alt="logo" class="h-6 invert" />
+        <h1 class="text-lg font-bold tracking-wide">CDG DECAR · Arriendos de Cortesía</h1>
+      </div>
+      <nav class="hidden md:flex items-center gap-3 text-sm">
+        <a class="hover:underline" href="/">Inicio</a>
+        <a class="hover:underline" href="#mvp">Módulo Arriendos</a>
+        <a class="hover:underline" href="#flota">Flota</a>
+        <a class="hover:underline" href="#reportes">Reportes</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="mvp" class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- FORMULARIO: PRESTAR VEHÍCULO -->
+    <section class="card">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-xl font-bold">Registrar préstamo</h2>
+        <span id="estadoBackend" class="badge badge-end">LocalStorage</span>
+      </div>
+      <p class="text-sm text-gray-600 mb-4">Seleccione la patente disponible, complete los datos y presione <strong>Prestar</strong>. El vehículo quedará <em>EN CURSO</em> hasta finalizar el proceso.</p>
+
+      <form id="formPrestar" class="space-y-4">
+        <div class="grid-3">
+          <div>
+            <label class="label">Patente</label>
+            <select id="patente" class="input"></select>
+          </div>
+          <div>
+            <label class="label">Cliente / Beneficiario</label>
+            <input id="cliente" class="input" placeholder="Nombre cliente" required />
+          </div>
+          <div>
+            <label class="label">RUT</label>
+            <input id="rut" class="input" placeholder="12.345.678-9" />
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div>
+            <label class="label">Fecha/Hora inicio</label>
+            <input id="fechaInicio" type="datetime-local" class="input" />
+          </div>
+          <div>
+            <label class="label">Tarifa diaria (CLP)</label>
+            <input id="tarifa" type="number" step="1" min="0" class="input" placeholder="Ej. 15000" />
+          </div>
+          <div>
+            <label class="label">Motivo</label>
+            <input id="motivo" class="input" placeholder="Garantía >5 días / Vehículo en taller / etc." />
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <label class="label">Kilometraje salida</label>
+            <input id="kmSalida" type="number" step="1" min="0" class="input" placeholder="Ej. 25400" />
+          </div>
+          <div>
+            <label class="label">Observaciones</label>
+            <input id="obsInicio" class="input" placeholder="Nivel de combustible, daños previos, etc." />
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button class="btn btn-primary" type="submit">Prestar</button>
+          <button class="btn btn-secondary" type="button" id="btnReset">Limpiar</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- EN CURSO -->
+    <section class="card">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-xl font-bold">Arriendos en curso</h2>
+        <div class="flex items-center gap-2">
+          <input id="buscarCurso" class="input !w-56" placeholder="Buscar por patente/cliente" />
+          <button id="exportarCSV" class="btn btn-secondary">Exportar CSV</button>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="th">Patente</th>
+              <th class="th">Cliente</th>
+              <th class="th">Inicio</th>
+              <th class="th">Tarifa</th>
+              <th class="th">Motivo</th>
+              <th class="th">KM salida</th>
+              <th class="th">Obs.</th>
+              <th class="th">Estado</th>
+              <th class="th">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyCurso"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- HISTÓRICO -->
+    <section class="card">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-xl font-bold">Histórico finalizados</h2>
+        <input id="buscarHist" class="input !w-56" placeholder="Buscar por patente/cliente" />
+      </div>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="th">Patente</th>
+              <th class="th">Cliente</th>
+              <th class="th">Inicio</th>
+              <th class="th">Fin</th>
+              <th class="th">Días</th>
+              <th class="th">Tarifa</th>
+              <th class="th">Costo total</th>
+              <th class="th">KM salida</th>
+              <th class="th">KM retorno</th>
+              <th class="th">Obs. cierre</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyHist"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- FLOTA -->
+    <section id="flota" class="card">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="text-xl font-bold">Flota</h2>
+        <div class="flex items-center gap-2">
+          <button id="btnAddVeh" class="btn btn-secondary">Agregar vehículo</button>
+          <button id="btnResetDemo" class="btn btn-secondary">Datos demo</button>
+        </div>
+      </div>
+      <p class="text-sm text-gray-600 mb-4">Resumen de vehículos con su estado y kilometraje actualizado.</p>
+      <div class="overflow-x-auto">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="th">Patente</th>
+              <th class="th">Modelo</th>
+              <th class="th">KM</th>
+              <th class="th">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="tbodyFlota"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="reportes" class="card">
+      <h2 class="text-xl font-bold mb-2">Reportes rápidos</h2>
+      <div class="grid-3">
+        <div class="p-4 bg-gray-50 rounded-xl">
+          <div class="text-3xl font-bold" id="kpiEnCurso">0</div>
+          <div class="text-sm text-gray-600">Arriendos en curso</div>
+        </div>
+        <div class="p-4 bg-gray-50 rounded-xl">
+          <div class="text-3xl font-bold" id="kpiDias">0</div>
+          <div class="text-sm text-gray-600">Días acumulados (mes)</div>
+        </div>
+        <div class="p-4 bg-gray-50 rounded-xl">
+          <div class="text-3xl font-bold" id="kpiFacturacion">$0</div>
+          <div class="text-sm text-gray-600">Facturación estimada (mes)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESPALDO / RESTAURACIÓN (GRATIS, SIN SERVIDOR) -->
+    <section class="card">
+      <h2 class="text-xl font-bold mb-2">Respaldo y restauración (sin pagar nada)</h2>
+      <p class="text-sm text-gray-600 mb-4">Usa estos botones para exportar toda la base de datos a un archivo <code>.json</code> y restaurarla cuando quieras, incluso en otro PC. Totalmente gratis y sin servicios externos.</p>
+      <div class="flex items-center gap-3">
+        <button id="btnExportJSON" class="btn btn-secondary">Exportar datos (.json)</button>
+        <label class="btn btn-secondary cursor-pointer">
+          Importar datos (.json)
+          <input id="inputImportJSON" type="file" accept="application/json" class="hidden" />
+        </label>
+        <button id="btnVaciarTodo" class="btn btn-secondary">Vaciar datos</button>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL FINALIZAR -->
+  <dialog id="modalFin" class="rounded-2xl p-0 w-full max-w-2xl shadow-2xl">
+    <form method="dialog">
+      <div class="p-5 border-b">
+        <h3 class="text-lg font-bold">Finalizar arriendo</h3>
+      </div>
+      <div class="p-5 space-y-4">
+        <div class="grid-3">
+          <div>
+            <label class="label">Fecha/Hora fin</label>
+            <input id="finFecha" type="datetime-local" class="input" />
+          </div>
+          <div>
+            <label class="label">KM retorno</label>
+            <input id="finKm" type="number" min="0" class="input" />
+          </div>
+          <div>
+            <label class="label">Observaciones cierre</label>
+            <input id="finObs" class="input" />
+          </div>
+        </div>
+        <div id="finResumen" class="text-sm text-gray-700"></div>
+      </div>
+      <div class="p-5 border-t flex items-center justify-end gap-2">
+        <button id="btnCancelarFin" class="btn btn-secondary" value="cancel">Cancelar</button>
+        <button id="btnGuardarFin" class="btn btn-primary" value="default">Guardar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script>
+    // ======== Utilidades ========
+    const fmtCLP = new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 });
+    const fmtDateTime = (s) => new Date(s).toLocaleString('es-CL');
+    const hoyLocalDatetime = () => {
+      const now = new Date();
+      const pad = (n) => String(n).padStart(2, '0');
+      const yyyy = now.getFullYear();
+      const mm = pad(now.getMonth()+1);
+      const dd = pad(now.getDate());
+      const hh = pad(now.getHours());
+      const mi = pad(now.getMinutes());
+      return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+    };
+    const diasEntre = (ini, fin) => {
+      const d = Math.ceil((new Date(fin) - new Date(ini)) / 86400000);
+      return Math.max(1, d);
+    };
+
+    // ======== Backend Adapter (LocalStorage por ahora) ========
+    const Storage = {
+      get(key, def) { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : def; },
+      set(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+    };
+
+    const DB = {
+      vehiculosKey: 'decar_arriendos_vehiculos',
+      arriendosKey: 'decar_arriendos_movimientos',
+      vehiculos: () => Storage.get('decar_arriendos_vehiculos', []),
+      saveVehiculos: (v) => Storage.set('decar_arriendos_vehiculos', v),
+      arriendos: () => Storage.get('decar_arriendos_movimientos', []),
+      saveArriendos: (a) => Storage.set('decar_arriendos_movimientos', a),
+    };
+
+    // Datos demo (puedes borrar y cargar desde Excel/API luego)
+    function seedDemo() {
+      if (!DB.vehiculos().length) {
+        DB.saveVehiculos([
+          { patente: 'VLFF22', modelo: 'Suzuki Baleno', km: 25340, estado: 'DISPONIBLE' },
+          { patente: 'JXGH11', modelo: 'Mazda CX-5', km: 48500, estado: 'DISPONIBLE' },
+          { patente: 'KTSP90', modelo: 'Changan Hunter', km: 12100, estado: 'DISPONIBLE' },
+          { patente: 'PKYZ31', modelo: 'Renault Stepway', km: 33210, estado: 'DISPONIBLE' },
+        ]);
+      }
+      if (!DB.arriendos().length) DB.saveArriendos([]);
+    }
+
+    // ======== Estado UI ========
+    const el = (id) => document.getElementById(id);
+    const patenteSel = el('patente');
+    const tbodyCurso = el('tbodyCurso');
+    const tbodyHist  = el('tbodyHist');
+    const tbodyFlota = el('tbodyFlota');
+
+    function cargarPatentesDisponibles() {
+      const vehs = DB.vehiculos().filter(v => v.estado === 'DISPONIBLE');
+      patenteSel.innerHTML = vehs.map(v => `<option value="${v.patente}">${v.patente} · ${v.modelo}</option>`).join('');
+      if (!vehs.length) {
+        patenteSel.innerHTML = '<option value="">— No hay vehículos disponibles —</option>';
+      }
+    }
+
+    function renderCurso(filtro='') {
+      const rows = DB.arriendos().filter(a => a.estado === 'EN CURSO').filter(a =>
+        [a.patente, a.cliente].join(' ').toLowerCase().includes(filtro.toLowerCase())
+      );
+      tbodyCurso.innerHTML = rows.map(a => `
+        <tr class="border-t">
+          <td class="td font-semibold">${a.patente}</td>
+          <td class="td">${a.cliente}</td>
+          <td class="td">${fmtDateTime(a.inicio)}</td>
+          <td class="td">${a.tarifa ? fmtCLP.format(a.tarifa) : '-'}</td>
+          <td class="td">${a.motivo || '-'}</td>
+          <td class="td">${a.kmSalida ?? '-'}</td>
+          <td class="td">${a.obsInicio || '-'}</td>
+          <td class="td"><span class="badge badge-live">EN CURSO</span></td>
+          <td class="td">
+            <button class="btn btn-primary text-xs" onclick='abrirFin("${a.id}")'>Finalizar</button>
+          </td>
+        </tr>
+      `).join('');
+      el('kpiEnCurso').textContent = rows.length;
+    }
+
+    function renderHist(filtro='') {
+      const now = new Date();
+      const mes = now.getMonth();
+      const anio = now.getFullYear();
+      let diasMes = 0, factMes = 0;
+
+      const rows = DB.arriendos().filter(a => a.estado === 'FINALIZADO').filter(a =>
+        [a.patente, a.cliente].join(' ').toLowerCase().includes(filtro.toLowerCase())
+      );
+      tbodyHist.innerHTML = rows.map(a => {
+        const d = diasEntre(a.inicio, a.fin);
+        const costo = (a.tarifa || 0) * d;
+        if (new Date(a.fin).getMonth()===mes && new Date(a.fin).getFullYear()===anio) {
+          diasMes += d; factMes += costo;
+        }
+        return `
+          <tr class="border-t">
+            <td class="td font-semibold">${a.patente}</td>
+            <td class="td">${a.cliente}</td>
+            <td class="td">${fmtDateTime(a.inicio)}</td>
+            <td class="td">${fmtDateTime(a.fin)}</td>
+            <td class="td">${d}</td>
+            <td class="td">${a.tarifa ? fmtCLP.format(a.tarifa) : '-'}</td>
+            <td class="td">${fmtCLP.format(costo)}</td>
+            <td class="td">${a.kmSalida ?? '-'}</td>
+            <td class="td">${a.kmRetorno ?? '-'}</td>
+            <td class="td">${a.obsCierre || '-'}</td>
+          </tr>`;
+      }).join('');
+
+      el('kpiDias').textContent = diasMes;
+      el('kpiFacturacion').textContent = fmtCLP.format(factMes);
+    }
+
+    function renderFlota() {
+      const rows = DB.vehiculos();
+      tbodyFlota.innerHTML = rows.map(v => `
+        <tr class="border-t">
+          <td class="td font-semibold">${v.patente}</td>
+          <td class="td">${v.modelo}</td>
+          <td class="td">${v.km?.toLocaleString('es-CL') ?? '-'}</td>
+          <td class="td">${v.estado === 'DISPONIBLE' ? '<span class="badge badge-end">DISPONIBLE</span>' : '<span class="badge badge-live">EN CURSO</span>'}</td>
+        </tr>
+      `).join('');
+    }
+
+    // ======== Acciones ========
+    // Exportar/Importar JSON (gratis, sin backend)
+    function exportJSON() {
+      const dump = {
+        vehiculos: DB.vehiculos(),
+        arriendos: DB.arriendos()
+      };
+      const blob = new Blob([JSON.stringify(dump, null, 2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const fecha = new Date().toISOString().slice(0,19).replace(/[:T]/g,'-');
+      a.href = url; a.download = `cdgdecar-arriendos-${fecha}.json`; a.click();
+      URL.revokeObjectURL(url);
+    }
+    function importJSON(file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!Array.isArray(data.vehiculos) || !Array.isArray(data.arriendos)) throw new Error('Archivo no válido');
+          DB.saveVehiculos(data.vehiculos);
+          DB.saveArriendos(data.arriendos);
+          cargarPatentesDisponibles();
+          renderCurso();
+          renderHist();
+          renderFlota();
+          alert('Datos importados correctamente.');
+        } catch (err) {
+          alert('Error al importar: ' + err.message);
+        }
+      };
+      reader.readAsText(file);
+    }
+    el('formPrestar').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const pat = el('patente').value;
+      if (!pat) return alert('No hay vehículo disponible seleccionado.');
+      const vehs = DB.vehiculos();
+      const v = vehs.find(x => x.patente === pat);
+      if (!v || v.estado !== 'DISPONIBLE') return alert('La patente seleccionada no está disponible.');
+
+      const a = DB.arriendos();
+      const nuevo = {
+        id: 'A' + crypto.randomUUID(),
+        patente: v.patente,
+        cliente: el('cliente').value.trim() || '-',
+        rut: el('rut').value.trim() || '-',
+        motivo: el('motivo').value.trim(),
+        inicio: el('fechaInicio').value ? new Date(el('fechaInicio').value).toISOString() : new Date().toISOString(),
+        tarifa: Number(el('tarifa').value || 0),
+        kmSalida: el('kmSalida').value ? Number(el('kmSalida').value) : v.km ?? null,
+        obsInicio: el('obsInicio').value.trim(),
+        estado: 'EN CURSO'
+      };
+
+      a.push(nuevo);
+      DB.saveArriendos(a);
+
+      v.estado = 'EN CURSO';
+      if (nuevo.kmSalida != null) v.km = nuevo.kmSalida;
+      DB.saveVehiculos(vehs);
+
+      cargarPatentesDisponibles();
+      renderCurso();
+      renderFlota();
+      e.target.reset();
+      el('fechaInicio').value = hoyLocalDatetime();
+    });
+
+    el('btnReset').addEventListener('click', () => {
+      document.getElementById('formPrestar').reset();
+      el('fechaInicio').value = hoyLocalDatetime();
+    });
+
+    // Buscar
+    el('buscarCurso').addEventListener('input', (ev) => renderCurso(ev.target.value));
+    el('buscarHist').addEventListener('input', (ev) => renderHist(ev.target.value));
+
+    // Exportar CSV en curso
+    el('exportarCSV').addEventListener('click', () => {
+      const rows = DB.arriendos().filter(a => a.estado==='EN CURSO');
+      const head = ['id','patente','cliente','rut','motivo','inicio','tarifa','kmSalida','obsInicio','estado'];
+      const csv = [head.join(',')].concat(rows.map(r => head.map(k => JSON.stringify(r[k] ?? '')).join(','))).join('
+');
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'arriendos_en_curso.csv'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Botones de Respaldo/Restauración
+    el('btnExportJSON').addEventListener('click', exportJSON);
+    el('inputImportJSON').addEventListener('change', (ev)=>{
+      if (ev.target.files?.[0]) importJSON(ev.target.files[0]);
+      ev.target.value = '';
+    });
+    el('btnVaciarTodo').addEventListener('click', ()=>{
+      if (!confirm('Esto borrará TODOS los datos locales (vehículos y arriendos). ¿Continuar?')) return;
+      localStorage.removeItem(DB.vehiculosKey);
+      localStorage.removeItem(DB.arriendosKey);
+      seedDemo();
+      cargarPatentesDisponibles();
+      renderCurso();
+      renderHist();
+      renderFlota();
+    });
+      const head = ['id','patente','cliente','rut','motivo','inicio','tarifa','kmSalida','obsInicio','estado'];
+      const csv = [head.join(',')].concat(rows.map(r => head.map(k => JSON.stringify(r[k] ?? '')).join(','))).join('\n');
+      const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'arriendos_en_curso.csv'; a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Agregar vehículo simple
+    el('btnAddVeh').addEventListener('click', () => {
+      const patente = prompt('Patente'); if (!patente) return;
+      const modelo = prompt('Modelo');
+      const km = Number(prompt('KM (opcional)')||0);
+      const vehs = DB.vehiculos();
+      if (vehs.some(v => v.patente===patente)) return alert('Esa patente ya existe.');
+      vehs.push({ patente, modelo: modelo||'-', km: isNaN(km)?0:km, estado:'DISPONIBLE' });
+      DB.saveVehiculos(vehs);
+      cargarPatentesDisponibles();
+      renderFlota();
+    });
+
+    // Datos demo reset
+    el('btnResetDemo').addEventListener('click', () => {
+      if (!confirm('Esto reiniciará los datos demo (vehículos y arriendos). ¿Continuar?')) return;
+      localStorage.removeItem(DB.vehiculosKey);
+      localStorage.removeItem(DB.arriendosKey);
+      seedDemo();
+      cargarPatentesDisponibles();
+      renderCurso();
+      renderHist();
+      renderFlota();
+    });
+
+    // Finalizar flujo
+    let finActualId = null;
+    function abrirFin(id) {
+      finActualId = id;
+      el('finFecha').value = hoyLocalDatetime();
+      el('finKm').value = '';
+      el('finObs').value = '';
+      el('finResumen').textContent = '';
+      document.getElementById('modalFin').showModal();
+    }
+    window.abrirFin = abrirFin; // exponer para botón
+
+    el('btnGuardarFin').addEventListener('click', (ev) => {
+      ev.preventDefault();
+      if (!finActualId) return;
+      const fin = el('finFecha').value ? new Date(el('finFecha').value).toISOString() : new Date().toISOString();
+      const kmRet = el('finKm').value ? Number(el('finKm').value) : null;
+      const obsCierre = el('finObs').value.trim();
+
+      const arr = DB.arriendos();
+      const idx = arr.findIndex(a => a.id === finActualId);
+      if (idx<0) return;
+      const a = arr[idx];
+      const d = diasEntre(a.inicio, fin);
+      const costo = (a.tarifa || 0) * d;
+
+      // actualizar arriendo
+      a.fin = fin;
+      a.kmRetorno = kmRet;
+      a.obsCierre = obsCierre;
+      a.estado = 'FINALIZADO';
+      DB.saveArriendos(arr);
+
+      // actualizar vehículo
+      const vehs = DB.vehiculos();
+      const v = vehs.find(v => v.patente === a.patente);
+      if (v) {
+        v.estado = 'DISPONIBLE';
+        if (kmRet != null) v.km = kmRet;
+        DB.saveVehiculos(vehs);
+      }
+
+      // feedback
+      alert(`Arriendo finalizado. Días: ${d}. Costo: ${fmtCLP.format(costo)}`);
+      document.getElementById('modalFin').close();
+      finActualId = null;
+      cargarPatentesDisponibles();
+      renderCurso();
+      renderHist();
+      renderFlota();
+    });
+
+    // ======== Init ========
+    (function init(){
+      seedDemo();
+      cargarPatentesDisponibles();
+      renderCurso();
+      renderHist();
+      renderFlota();
+      el('fechaInicio').value = hoyLocalDatetime();
+
+      // Mostrar bandera backend (LocalStorage ahora; Supabase luego)
+      const flag = el('estadoBackend');
+      flag.textContent = 'LocalStorage';
+      flag.className = 'badge badge-end';
+    })();
+
+    // ======== Notas para futuro backend (Supabase/Apps Script) ========
+    // 1) Crea tablas vehiculos(patente pk, modelo, km, estado) y arriendos(id pk, patente fk, cliente, rut, motivo, inicio, fin, tarifa, kmSalida, kmRetorno, obsInicio, obsCierre, estado).
+    // 2) Reemplaza DB.* por fetch a tu API (Supabase JS o Apps Script). Mantén las mismas propiedades para no tocar la UI.
+    // 3) Agrega autenticación (Supabase Auth) si necesitas permisos por usuario.
+  </script>
+</body>
+</html>
