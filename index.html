@@ -86,6 +86,7 @@
       margin: 0;
     }
   </style>
+
   <script>
     const clave = prompt("Ingresa la contraseña:");
     if (clave !== "Cdgdecar") {
@@ -93,12 +94,15 @@
       window.location.href = "https://www.google.com";
     }
   </script>
+
 </head>
+
 <body>
 
-  <!-- Barra común -->
+  <!-- Barra superior -->
   <div class="navbar">
     <img src="./assets/Logo.png" alt="Logo DECAR">
+
     <div class="nav-links">
       <a href="index.html">🏠 Inicio</a>
       <a href="dashboard.html">📊 Control de Gestión</a>
@@ -108,18 +112,29 @@
   </div>
 
   <div class="container">
+
     <h1>CONTROL DE GESTIÓN DECAR</h1>
     <p>Selecciona una opción para continuar</p>
+
     <div class="menu-inicial">
+
       <a href="dashboard.html" class="opcion-box">
-        <img src="https://cdn-icons-png.flaticon.com/512/2103/2103656.png" alt="Control de Gestión" />
+        <img src="https://cdn-icons-png.flaticon.com/512/2103/2103656.png" alt="Control de Gestión">
         <p>Control de Gestión</p>
       </a>
+
       <a href="ventas.html" class="opcion-box">
-        <img src="https://cdn-icons-png.flaticon.com/512/2345/2345336.png" alt="Ventas" />
+        <img src="https://cdn-icons-png.flaticon.com/512/2345/2345336.png" alt="Ventas">
         <p>Ventas</p>
       </a>
+
+      <a href="kpi-postventa.html" class="opcion-box">
+        <img src="https://cdn-icons-png.flaticon.com/512/2620/2620976.png" alt="KPI Postventa">
+        <p>KPI Postventa</p>
+      </a>
+
     </div>
+
   </div>
 
 </body>
